@@ -172,7 +172,16 @@ basicCC + geom_bar(stat="identity", position = "dodge")
 
 About 20% of gay people who received the vaccine became infected, while 80% of people who received a placebo became infected. This is roughly a 4:1 ratio.
 
+### Numerical results
 
+```{r}
+table1 <- xtabs(~infected + treatment, data=gay)
+rowPerc(table1)
+colPerc(table1)
+```
+
+The percentages of gay people who contracted COVID-19 after receiving the vaccine and a placebo are displayed in these numerical results. 
+According to the research, 20% of the gay population who received a vaccine were infected, whereas 80% of those who received a placebo became infected. In other words, the vaccine is fantastic for gay people.
 
 ## Druggies
 
