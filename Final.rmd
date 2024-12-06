@@ -233,4 +233,16 @@ The population that responded to the question about drug usage and its associati
 
 Approximately 80% of drug users who received the vaccine became infected, compared to 8% of those who received a placebo. This represents a 1:10 ratio. 
 
+### Numerical results
+
+```{r}
+table1 <- xtabs(~infected + treatment, data= Druguser)
+rowPerc(table1)
+colPerc(table1)
+```
+ 
+
+The percentages of drug users who contracted COVID-19 after receiving the vaccine and a placebo are displayed in these numerical results.
+91.7% of drug users who received the vaccination also contracted the infection. 8.3% of individuals who received a placebo became infected. This vaccine appears to be a terrible one for drug users to take.
+
 # Overall Results and Conclusions
