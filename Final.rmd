@@ -94,7 +94,63 @@ options(digits=2)
 The odds ratio of the males with vaccines vs those with placebos has a ratio greater than 70 meaning we have a effective vaccine for males. 
 
 ## Females
+### Barplot
 
+```{r}
+Females <- gal %>% group_by(infected,treatment) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+basicC <- ggplot(Females,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+
+basicCC <- ggplot(Females,aes(x=infected,y=prcnt*100,fill=treatment)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+The population of gals (females) and their association with the spread of COVID-19 through vaccination or placebo are depicted in this plot. 
+
+Comparing the Covid-19 vaccination to the placebo, it has been demonstrated that the ratio of infected individuals is 2:1. Approximately 36% of females who received a vaccine appear to have contracted the infection, compared to roughly 65% of females who received a placebo.
+
+### Numerical results
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=gal)
+rowPerc(table1)
+colPerc(table1)
+```
+
+35% of females who received the immunization contracted COVID-19, compared to 65% of those who received a placebo. This does indicate a ratio of roughly 2:1.
+
+### Inferential 
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+galsfish <- fisher.test(table1)
+galsfish
+```
+
+
+
+The output of the Fisher's Exact test is the data that should be closely monitored among all of these findings. At 0.00000001, the p-value shown above is incredibly minuscule. This is a very small number. The null hypothesis can be rejected in favor of the alternative as this number indicates that the results are unlikely to have happened by accident.
+
+
+The odds ratio is 1.9, which is a respectable ratio for effectiveness, according to the Fishers' Exact Test. 
+
+```{r}
+effect <- galsfish$p.value/(galsfish$p.value +1)
+effectivenessgal = galsfish$estimate/(galsfish$estimate +1)*100
+print(effectivenessgal)
+```
+
+```{r}
+low=(galsfish$conf.int[1]/(galsfish$conf.int[1] +1))*100
+hi=(galsfish$conf.int[2]/(galsfish$conf.int[2] +1))*100
+options(digits=2)
+```
+
+## Effectiveness Confidence Interval `r low`  to `r hi`
+
+
+The girls' efficacy on the confidence interval is 65. This is above 50%, indicating that the vaccine is fairly efficient; however, as compared to females, males are more effective, as evidenced by their 74 confidence interval. 
 
 ## LGBTQ
 
