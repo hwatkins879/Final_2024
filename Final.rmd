@@ -1,6 +1,6 @@
 ---
 title: "Covid91 vaccine study Final2024"
-author: "Put your name here!"
+author: "Hailey Watkins-Oliver!"
 output: 
   html_document:
     number_sections: true
@@ -18,6 +18,12 @@ FinalDat <-read.csv(file="finalSumr2024.csv",header=TRUE)
 FinalData <- FinalDat  %>% select(-one_of("X"))
 FinalData <- FinalData %>%
 mutate(across(where(is.character), as.factor))
+FinalData$treatment <- relevel(FinalData$treatment,ref="placebo")
+#FinalData$infected <- relevel(FinalData$infected,ref="OK")
+guy = filter(FinalData, sex =="M")
+gal = filter(FinalData, sex =="F")
+gay = filter(FinalData, LGBTQ =="gay")
+Druguser = filter(FinalData, DrugUser =="yes")
 ```
 
 # Introduction
@@ -26,6 +32,66 @@ A new  preventative vaccine (covid921) is under test in clinical trials. Given t
 
 ## Males
 
+```{r}
+Males <- guy %>%
+  group_by(infected,treatment) %>%
+  summarize(count=n()) %>% 
+  mutate(prcnt=count/sum(count))
+
+basicC <- ggplot(Males,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+
+basicCC <- ggplot(Males,aes(x=infected,y=prcnt*100,fill=treatment)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+
+The population of men (males) and their association to COVID-19 by vaccination or placebo are represented in this plot. 
+
+
+Plotting indicates that COVID-19 was significantly lower in those who received the immunization than in those who received a placebo. The size difference between the placebo and the vaccination is roughly 3:1.
+
+### Numerical results
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=guy)
+rowPerc(table1)
+colPerc(table1)
+```
+
+The percentage of boys who contracted COVID-19 after receiving the immunization was a low 26.2%. 73.8% of those who are not vaccinated contract COVID-19. The vaccine appears to have a bright future.
+
+
+### Inferential 
+
+
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+guysfish <- fisher.test(table1)
+guysfish
+```
+
+
+The output of the Fisher's Exact test is the data that should be closely monitored among all of these findings. The p-value, which is 2.2e-16 0.00000000000000022, is quite small. This figure indicates that it is unlikely that these outcomes happened by accident.
+
+When compared to a placebo, our odds ratio of roughly 2.8 indicates that this vaccine is beneficial in halting COVID-19.
+```{r}
+effect <- guysfish$p.value/(guysfish$p.value +1)
+effectivenessguy = guysfish$estimate/(guysfish$estimate +1)*100
+print(effectivenessguy)
+```
+
+```{r}
+low=(guysfish$conf.int[1]/(guysfish$conf.int[1] +1))*100
+hi=(guysfish$conf.int[2]/(guysfish$conf.int[2] +1))*100
+options(digits=2)
+```
+
+## Effectiveness Confidence Interval `r low`  to `r hi`
+
+
+The odds ratio of the males with vaccines vs those with placebos has a ratio greater than 70 meaning we have a effective vaccine for males. 
 
 ## Females
 
