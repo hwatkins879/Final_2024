@@ -216,6 +216,21 @@ The effectiveness of COVID-19 for people who identify as LGBT is shown above.
 The odds ratio of 81 is the greatest we have yet to observe across all data points. This is a really effective vaccine for gay people.
 
 ## Druggies
+### Barplot
 
+
+```{r}
+Druggies <-  Druguser %>% group_by(infected,treatment) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+basicC <- ggplot(Druggies,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+
+basicCC <- ggplot(Druggies,aes(x=infected,y=prcnt*100,fill=treatment)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+
+The population that responded to the question about drug usage and its association with COVID-19 infection while receiving the vaccination or a placebo is depicted in this plot.
+
+Approximately 80% of drug users who received the vaccine became infected, compared to 8% of those who received a placebo. This represents a 1:10 ratio. 
 
 # Overall Results and Conclusions
