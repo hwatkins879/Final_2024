@@ -153,6 +153,24 @@ options(digits=2)
 The girls' efficacy on the confidence interval is 65. This is above 50%, indicating that the vaccine is fairly efficient; however, as compared to females, males are more effective, as evidenced by their 74 confidence interval. 
 
 ## LGBTQ
+### Barplot
+
+```{r}
+LGBTQ <- gay %>% group_by(infected,treatment) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+
+# the group_by followed by summarize(count=n())
+
+basicC <- ggplot(LGBTQ,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+
+#Now for percentage plot
+
+basicCC <- ggplot(LGBTQ,aes(x=infected,y=prcnt*100,fill=treatment)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+
+About 20% of gay people who received the vaccine became infected, while 80% of people who received a placebo became infected. This is roughly a 4:1 ratio.
 
 
 
