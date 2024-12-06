@@ -278,3 +278,5 @@ options(digits=2)
 The COVID-19 effectiveness for men is seen above. The vaccine is considered successful if its efficacy is greater than 50%. Since this vaccination is less than 50 and has a confidence interval odds ratio of 8, it should never be considered. It is worse than doing nothing since it causes COVID-19, and this vaccine is better than doing nothing.
 
 # Overall Results and Conclusions
+
+With the exception of drug users, this COVID-19 vaccine proved excellent overall. Since the evidence indicates that the vaccine actually causes COVID-19 among drug users, with approximately 91% of drug users contracting the virus when receiving the vaccine and 8% becoming infected while receiving a placebo, drug users would suffer a worse consequence. This vaccination will benefit men, women, and LGBTQ people in addition to drug users, but the research indicates that LGBTQ people were more positively affected, with only 20% of them contracting the virus while receiving it. This is the lowest percentage observed, with males coming in second with roughly 26% of cases of infection following vaccination and females coming in third with 35%. 
