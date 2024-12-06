@@ -183,6 +183,38 @@ colPerc(table1)
 The percentages of gay people who contracted COVID-19 after receiving the vaccine and a placebo are displayed in these numerical results. 
 According to the research, 20% of the gay population who received a vaccine were infected, whereas 80% of those who received a placebo became infected. In other words, the vaccine is fantastic for gay people.
 
+### Inferential 
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+gaysfish <- fisher.test(table1)
+gaysfish
+```
+
+
+A p-value of 0.00000007 is found. Despite the extremely small number, it can be concluded that these data indicate that something is happening.
+
+The odds ratio of 4.3, as shown by the Fishers' Exact Test, indicates that this vaccine is highly effective.
+
+```{r}
+effect <- gaysfish$p.value/(gaysfish$p.value +1)
+effectivenessgays = gaysfish$estimate/(gaysfish$estimate +1)*100
+print(effectivenessgays)
+```
+
+```{r}
+low=(gaysfish$conf.int[1]/(gaysfish$conf.int[1] +1))*100
+hi=(gaysfish$conf.int[2]/(gaysfish$conf.int[2] +1))*100
+options(digits=2)
+```
+
+
+## Effectiveness Confidence Interval `r low`  to `r hi`
+
+The effectiveness of COVID-19 for people who identify as LGBT is shown above.  
+The odds ratio of 81 is the greatest we have yet to observe across all data points. This is a really effective vaccine for gay people.
+
 ## Druggies
 
 
